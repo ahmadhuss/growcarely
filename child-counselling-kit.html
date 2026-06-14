@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feel, Learn, Grow | Child Counselling Toolkit</title>
+  <style>
+    :root {
+      --bg: #fffaf3;
+      --card: #ffffff;
+      --text: #243042;
+      --muted: #64748b;
+      --primary: #7c9cff;
+      --primary-dark: #5577e6;
+      --secondary: #9ee7c5;
+      --accent: #ffd166;
+      --pink: #ffb4c8;
+      --shadow: 0 18px 45px rgba(36, 48, 66, 0.13);
+      --soft-shadow: 0 10px 25px rgba(36, 48, 66, 0.09);
+      --radius: 26px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(circle at 10% 10%, rgba(255, 209, 102, 0.35), transparent 28%),
+                  radial-gradient(circle at 90% 12%, rgba(158, 231, 197, 0.45), transparent 30%),
+                  radial-gradient(circle at 15% 80%, rgba(255, 180, 200, 0.28), transparent 25%),
+                  var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    body.urdu {
+      font-family: "Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", "Noto Naskh Arabic", "Segoe UI", Arial, sans-serif;
+      direction: rtl;
+      text-align: right;
+      line-height: 1.95;
+    }
+    a { color: inherit; text-decoration: none; }
+    .page { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    .nav {
+      position: sticky; top: 16px; z-index: 20; margin-top: 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      padding: 14px 16px; background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.9); backdrop-filter: blur(18px);
+      box-shadow: var(--soft-shadow); border-radius: 999px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -0.03em; }
+    .logo {
+      width: 42px; height: 42px; border-radius: 16px; display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      box-shadow: 0 12px 22px rgba(124, 156, 255, 0.28);
+      animation: floatLogo 4s ease-in-out infinite;
+    }
+    @keyframes floatLogo { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-4px) rotate(4deg)} }
+    .nav-links { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .nav a { font-size: 0.92rem; padding: 10px 12px; border-radius: 999px; color: var(--muted); transition: 0.25s ease; }
+    .nav a:hover { background: rgba(124, 156, 255, 0.12); color: var(--primary-dark); }
+    .lang-btn {
+      border: none; cursor: pointer; padding: 11px 16px; border-radius: 999px;
+      font-weight: 800; color: white; background: linear-gradient(135deg, var(--primary), #a67cff);
+      box-shadow: 0 12px 25px rgba(124, 156, 255, 0.28); transition: 0.25s ease; white-space: nowrap;
+    }
+    .lang-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 30px rgba(124, 156, 255, 0.35); }
+    .hero { position: relative; display: grid; grid-template-columns: 1.08fr 0.92fr; align-items: center; gap: 42px; min-height: 640px; padding: 72px 0 42px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px; width: fit-content; padding: 10px 14px;
+      border-radius: 999px; background: rgba(255, 255, 255, 0.75); color: var(--primary-dark);
+      font-weight: 800; box-shadow: var(--soft-shadow); margin-bottom: 18px;
+    }
+    .hero h1 { font-size: clamp(2.5rem, 6vw, 5.9rem); line-height: 0.98; letter-spacing: -0.075em; margin-bottom: 22px; }
+    body.urdu .hero h1 { letter-spacing: 0; line-height: 1.35; }
+    .gradient-text { background: linear-gradient(135deg, #5e7cff, #28b980, #ff9f1c); -webkit-background-clip: text; color: transparent; }
+    .hero p { font-size: clamp(1rem, 2vw, 1.22rem); line-height: 1.78; color: var(--muted); max-width: 670px; margin-bottom: 28px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+    .btn { border: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 20px; border-radius: 999px; font-weight: 850; transition: 0.25s ease; font-size: 1rem; }
+    .btn-primary { color: white; background: linear-gradient(135deg, var(--primary), #a67cff); box-shadow: 0 16px 32px rgba(124, 156, 255, 0.32); }
+    .btn-primary:hover, .btn-secondary:hover { transform: translateY(-3px); }
+    .btn-secondary { background: white; color: var(--text); box-shadow: var(--soft-shadow); }
+    .hero-art { position: relative; min-height: 500px; display: grid; place-items: center; }
+    .orbit { position: absolute; width: min(420px, 85vw); height: min(420px, 85vw); border: 2px dashed rgba(124, 156, 255, 0.25); border-radius: 50%; animation: spin 24s linear infinite; }
+    @keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+    .main-card { position: relative; width: min(360px, 90%); padding: 30px; border-radius: 38px; background: rgba(255,255,255,.86); box-shadow: var(--shadow); backdrop-filter: blur(15px); text-align: center; z-index: 2; animation: floatCard 5s ease-in-out infinite; }
+    @keyframes floatCard { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-13px)} }
+    .face { width: 150px; height: 150px; margin: 0 auto 18px; border-radius: 48% 52% 50% 50%; background: linear-gradient(135deg, #ffd166, #ffb4c8); display: grid; place-items: center; font-size: 4rem; box-shadow: inset 0 -12px 25px rgba(255,255,255,.34); }
+    .main-card h3 { font-size: 1.55rem; margin-bottom: 8px; }
+    .main-card p { color: var(--muted); line-height: 1.65; }
+    .bubble { position: absolute; display: grid; place-items: center; width: 78px; height: 78px; border-radius: 28px; background: white; box-shadow: var(--soft-shadow); font-size: 2rem; animation: bubble 4s ease-in-out infinite; z-index: 4; }
+    .bubble:nth-of-type(2){top:55px;left:20px;animation-delay:.2s;background:#e9fff5}.bubble:nth-of-type(3){top:80px;right:10px;animation-delay:.8s;background:#fff6db}.bubble:nth-of-type(4){bottom:80px;left:0;animation-delay:1.2s;background:#fff0f4}.bubble:nth-of-type(5){bottom:55px;right:36px;animation-delay:1.6s;background:#eef2ff}
+    @keyframes bubble { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-12px) rotate(5deg)} }
+    section { padding: 58px 0; }
+    .section-head { text-align: center; max-width: 760px; margin: 0 auto 30px; }
+    .section-head .small-title { display: inline-block; padding: 8px 13px; border-radius: 999px; background: rgba(124,156,255,.12); color: var(--primary-dark); font-weight: 900; margin-bottom: 12px; }
+    .section-head h2 { font-size: clamp(2rem, 4vw, 3.1rem); letter-spacing: -0.06em; line-height: 1.1; margin-bottom: 12px; }
+    body.urdu .section-head h2 { letter-spacing: 0; line-height: 1.45; }
+    .section-head p { color: var(--muted); line-height: 1.8; font-size: 1.06rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .card { background: rgba(255,255,255,.82); border: 1px solid rgba(255,255,255,.92); border-radius: var(--radius); padding: 24px; box-shadow: var(--soft-shadow); transition: .27s ease; position: relative; overflow: hidden; }
+    .card::after { content:""; position:absolute; width:130px; height:130px; right:-50px; bottom:-70px; border-radius:50%; background: rgba(124,156,255,.10); transition:.27s ease; }
+    body.urdu .card::after { right:auto; left:-50px; }
+    .card:hover { transform: translateY(-8px); box-shadow: var(--shadow); }
+    .card:hover::after { transform: scale(1.25); }
+    .icon { width: 58px; height: 58px; border-radius: 20px; display: grid; place-items: center; font-size: 1.8rem; margin-bottom: 16px; background: linear-gradient(135deg, rgba(124,156,255,.18), rgba(158,231,197,.28)); }
+    .card h3 { font-size: 1.35rem; margin-bottom: 10px; position: relative; z-index: 1; }
+    .card p, .card li { color: var(--muted); line-height: 1.75; position: relative; z-index: 1; }
+    .role-card { cursor: pointer; min-height: 240px; }
+    .role-card.active { outline: 3px solid rgba(124,156,255,.42); background: #fff; }
+    .role-detail { margin-top: 22px; display: none; animation: fadeUp .35s ease both; }
+    .role-detail.active { display: block; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+    .pill-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .pill { padding: 9px 12px; border-radius: 999px; background: #f1f5ff; color: #5264b0; font-weight: 800; font-size: .92rem; }
+    .emotion-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 18px; }
+    .emotion-btn { border: none; cursor: pointer; background: rgba(255,255,255,.88); border-radius: 24px; padding: 18px 12px; box-shadow: var(--soft-shadow); transition: .25s ease; color: var(--text); }
+    .emotion-btn:hover, .emotion-btn.active { transform: translateY(-5px); background: #fff4cc; box-shadow: var(--shadow); }
+    .emotion-btn span { display: block; font-size: 2.35rem; margin-bottom: 6px; }
+    .emotion-tip { min-height: 110px; padding: 22px; border-radius: var(--radius); background: linear-gradient(135deg, rgba(255,255,255,.88), rgba(255,246,219,.82)); box-shadow: var(--soft-shadow); color: var(--muted); line-height: 1.85; }
+    .calm-box { display: grid; gap: 18px; grid-template-columns: .9fr 1.1fr; align-items: center; background: rgba(255,255,255,.82); border-radius: 38px; padding: 28px; box-shadow: var(--shadow); }
+    .breathing-circle { width: min(230px,70vw); height: min(230px,70vw); border-radius: 50%; margin: 0 auto; display: grid; place-items: center; background: radial-gradient(circle,#fff 0 39%,rgba(158,231,197,.9) 40% 58%,rgba(124,156,255,.28) 59% 100%); box-shadow: inset 0 0 40px rgba(255,255,255,.9), var(--soft-shadow); animation: breathe 6s ease-in-out infinite; text-align: center; font-weight: 900; color: var(--primary-dark); padding: 18px; }
+    @keyframes breathe { 0%,100%{transform:scale(.85)} 50%{transform:scale(1.05)} }
+    .tips-list { list-style: none; display: grid; gap: 12px; }
+    .tips-list li { padding: 14px 16px; border-radius: 18px; background: #f8fbff; color: var(--muted); border: 1px solid rgba(124,156,255,.12); }
+    .tips-list li::before { content:"✓"; color:#28b980; font-weight:900; margin-right:9px; }
+    body.urdu .tips-list li::before { margin-right:0; margin-left:9px; }
+    .psycho-card { display: flex; flex-direction: column; gap: 13px; }
+    .example-box { background: #f8fbff; padding: 14px; border-radius: 18px; border-left: 5px solid var(--secondary); color: var(--muted); line-height: 1.75; }
+    body.urdu .example-box { border-left: none; border-right: 5px solid var(--secondary); }
+    .dont { color: #e2566f; font-weight: 900; } .do { color: #23a56f; font-weight: 900; }
+    .tree-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
+    .tree-form { display: grid; gap: 12px; }
+    label { font-weight: 850; color: var(--text); }
+    input { width: 100%; border: 1px solid rgba(100,116,139,.18); border-radius: 18px; padding: 13px 14px; font: inherit; outline: none; background: rgba(255,255,255,.88); color: var(--text); transition: .2s ease; }
+    input:focus { border-color: rgba(124,156,255,.7); box-shadow: 0 0 0 4px rgba(124,156,255,.12); }
+    .tree-art { min-height: 430px; position: relative; border-radius: 32px; background: linear-gradient(180deg,#efffff,#fff9df); overflow: hidden; box-shadow: var(--soft-shadow); padding: 22px; }
+    .sun { position: absolute; width: 80px; height: 80px; border-radius: 50%; top: 28px; right: 28px; background: var(--accent); box-shadow: 0 0 0 16px rgba(255,209,102,.18); animation: sunPulse 3s ease-in-out infinite; }
+    body.urdu .sun { right:auto; left:28px; }
+    @keyframes sunPulse { 50%{transform:scale(1.06);box-shadow:0 0 0 24px rgba(255,209,102,.13)} }
+    .tree { position: absolute; left: 50%; bottom: 38px; transform: translateX(-50%); width: 280px; height: 330px; }
+    .trunk { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 70px; height: 160px; border-radius: 30px 30px 8px 8px; background: linear-gradient(90deg,#b9794d,#8f5c38); }
+    .crown { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 240px; height: 210px; border-radius: 54% 46% 48% 52%; background: linear-gradient(135deg,#8ee6b6,#50c878); box-shadow: 0 18px 30px rgba(40,185,128,.25); animation: crownSway 5s ease-in-out infinite; }
+    @keyframes crownSway { 0%,100%{transform:translateX(-50%) rotate(-1deg)} 50%{transform:translateX(-50%) rotate(2deg)} }
+    .leaf-note { position:absolute; padding:8px 10px; border-radius:999px; background:rgba(255,255,255,.78); color:#2e7d57; font-size:.78rem; font-weight:900; max-width:115px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; z-index:3; }
+    .leaf1{top:50px;left:28px}.leaf2{top:96px;right:18px}.leaf3{top:145px;left:45px}.leaf4{top:28px;right:55px}
+    .ground { position:absolute; left:0; right:0; bottom:0; height:80px; background:rgba(158,231,197,.38); border-radius:50% 50% 0 0; }
+    .worksheet-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:16px; }
+    .worksheet { min-height:150px; display:flex; flex-direction:column; justify-content:space-between; }
+    .tag { display:inline-block; width:fit-content; padding:7px 10px; border-radius:999px; background:#fff1c7; color:#9b6d00; font-weight:900; font-size:.83rem; margin-top:12px; }
+    .footer { margin: 40px 0 26px; padding: 26px; text-align: center; color: var(--muted); background: rgba(255,255,255,.72); border-radius: 26px; box-shadow: var(--soft-shadow); }
+    .footer strong { color: var(--text); }
+    .reveal { opacity:0; transform: translateY(24px); transition: .75s ease; }
+    .reveal.show { opacity:1; transform: translateY(0); }
+    @media (max-width: 980px) {
+      .hero, .calm-box, .tree-wrap { grid-template-columns: 1fr; }
+      .hero { padding-top: 54px; }
+      .hero-art { min-height: 430px; }
+      .grid-3, .grid-2, .worksheet-grid { grid-template-columns: 1fr 1fr; }
+      .emotion-grid { grid-template-columns: repeat(3, 1fr); }
+      .nav-links a { display: none; }
+    }
+    @media (max-width: 620px) {
+      .page { width: min(100% - 22px, 1180px); }
+      .nav { top: 10px; border-radius: 24px; }
+      .brand span:last-child { display: none; }
+      .hero h1 { font-size: clamp(2.35rem, 13vw, 4rem); }
+      .hero-art { min-height: 365px; }
+      .main-card { padding: 22px; }
+      .face { width: 115px; height: 115px; font-size: 3rem; }
+      .bubble { width: 60px; height: 60px; border-radius: 21px; font-size: 1.5rem; }
+      .grid-3, .grid-2, .worksheet-grid, .emotion-grid { grid-template-columns: 1fr; }
+      .section-head { text-align: start; }
+      .card { padding: 20px; }
+      section { padding: 42px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <nav class="nav">
+      <div class="brand"><div class="logo">🌱</div><span data-i18n="brand">Feel, Learn, Grow</span></div>
+      <div class="nav-links">
+        <a href="#roles" data-i18n="navRoles">Roles</a>
+        <a href="#emotions" data-i18n="navFeelings">Feelings</a>
+        <a href="#parents" data-i18n="navParents">Parents</a>
+        <a href="#teachers" data-i18n="navTeachers">Teachers</a>
+        <a href="#warning" data-i18n="navWarning">Warning Signs</a>
+        <a href="#resources" data-i18n="navResources">Resources</a>
+        <a href="#worksheets" data-i18n="navWorksheets">Worksheets</a>
+        <button class="lang-btn" id="langToggle">اردو میں پڑھیں</button>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-text reveal">
+        <div class="badge" data-i18n="badge">✨ Child Counselling Toolkit</div>
+        <h1><span data-i18n="heroTitleA">Feel.</span><br><span class="gradient-text" data-i18n="heroTitleB">Learn.</span><br><span data-i18n="heroTitleC">Grow.</span></h1>
+        <p data-i18n="heroText">A creative and interactive space for children, parents, and teachers to understand emotions, learning difficulties, confidence, and simple counselling strategies.</p>
+        <div class="hero-actions">
+          <a href="#roles" class="btn btn-primary" data-i18n="startBtn">Start Exploring</a>
+          <a href="#calm" class="btn btn-secondary" data-i18n="calmBtn">Try Calm Down Box</a>
+        </div>
+      </div>
+      <div class="hero-art reveal">
+        <div class="orbit"></div><div class="bubble">📚</div><div class="bubble">💛</div><div class="bubble">🎨</div><div class="bubble">🧠</div>
+        <div class="main-card"><div class="face">😊</div><h3 data-i18n="mainCardTitle">A safe place to grow</h3><p data-i18n="mainCardText">Small steps, kind words, and supportive adults can help every child move forward.</p></div>
+      </div>
+    </header>
+
+    <section id="roles" class="reveal">
+      <div class="section-head"><span class="small-title" data-i18n="rolesSmall">Choose Your Role</span><h2 data-i18n="rolesTitle">Who are you here for?</h2><p data-i18n="rolesText">Select a role to see simple counselling guidance designed for that person.</p></div>
+      <div class="grid-3">
+        <article class="card role-card active" data-role="child"><div class="icon">🧒</div><h3 data-i18n="childRole">I am a Child</h3><p data-i18n="childRoleText">Understand your feelings, learn calming tools, and build confidence in small steps.</p></article>
+        <article class="card role-card" data-role="parent"><div class="icon">👨‍👩‍👧</div><h3 data-i18n="parentRole">I am a Parent</h3><p data-i18n="parentRoleText">Learn how to respond with support, reduce pressure, and encourage effort.</p></article>
+        <article class="card role-card" data-role="teacher"><div class="icon">👩‍🏫</div><h3 data-i18n="teacherRole">I am a Teacher</h3><p data-i18n="teacherRoleText">Support learning difficulties with kind language, clear steps, and timely referral.</p></article>
+      </div>
+      <div class="role-detail active card" id="role-child"><h3 data-i18n="childDetailTitle">For Children</h3><p data-i18n="childDetailText">Your feelings are important. You can learn to name your feelings, ask for help, try again after mistakes, and use simple tools when schoolwork feels hard.</p><div class="pill-list"><span class="pill" data-i18n="childPill1">Feelings Check-In</span><span class="pill" data-i18n="childPill2">Calm Breathing</span><span class="pill" data-i18n="childPill3">Strength Tree</span><span class="pill" data-i18n="childPill4">Study Helper</span></div></div>
+      <div class="role-detail card" id="role-parent"><h3 data-i18n="parentDetailTitle">For Parents</h3><p data-i18n="parentDetailText">Children need patience, routine, encouragement, and emotional safety. When parents praise effort and listen calmly, children become more confident and willing to learn.</p><div class="pill-list"><span class="pill" data-i18n="parentPill1">Listen first</span><span class="pill" data-i18n="parentPill2">Avoid comparison</span><span class="pill" data-i18n="parentPill3">Praise effort</span><span class="pill" data-i18n="parentPill4">Use routine</span></div></div>
+      <div class="role-detail card" id="role-teacher"><h3 data-i18n="teacherDetailTitle">For Teachers</h3><p data-i18n="teacherDetailText">A child who struggles may not be lazy. They may need clearer instructions, extra practice, emotional support, or counselling referral.</p><div class="pill-list"><span class="pill" data-i18n="teacherPill1">Break steps</span><span class="pill" data-i18n="teacherPill2">Use visuals</span><span class="pill" data-i18n="teacherPill3">Give feedback</span><span class="pill" data-i18n="teacherPill4">Refer early</span></div></div>
+    </section>
+
+    <section id="emotions" class="reveal">
+      <div class="section-head"><span class="small-title" data-i18n="emotionSmall">Feelings Check-In</span><h2 data-i18n="emotionTitle">How are you feeling today?</h2><p data-i18n="emotionText">Click an emotion and read a simple supportive tip.</p></div>
+      <div class="emotion-grid">
+        <button class="emotion-btn active" data-emotion="happy"><span>😊</span><b data-i18n="happy">Happy</b></button>
+        <button class="emotion-btn" data-emotion="sad"><span>😢</span><b data-i18n="sad">Sad</b></button>
+        <button class="emotion-btn" data-emotion="angry"><span>😡</span><b data-i18n="angry">Angry</b></button>
+        <button class="emotion-btn" data-emotion="worried"><span>😟</span><b data-i18n="worried">Worried</b></button>
+        <button class="emotion-btn" data-emotion="confused"><span>😕</span><b data-i18n="confused">Confused</b></button>
+      </div>
+      <div class="emotion-tip" id="emotionTip"></div>
+    </section>
+
+    <section id="calm" class="reveal">
+      <div class="section-head"><span class="small-title" data-i18n="calmSmall">Calm Down Box</span><h2 data-i18n="calmTitle">Pause, breathe, and feel safe</h2><p data-i18n="calmText">This box gives children quick tools to use when they feel stressed, angry, or worried.</p></div>
+      <div class="calm-box"><div class="breathing-circle" data-i18n="breatheCircle">Breathe In<br>Breathe Out</div><ul class="tips-list"><li data-i18n="calmTip1">Take five slow breaths and relax your shoulders.</li><li data-i18n="calmTip2">Name five things you can see around you.</li><li data-i18n="calmTip3">Say: I can try one small step.</li><li data-i18n="calmTip4">Ask a safe adult for help when the feeling feels too big.</li></ul></div>
+    </section>
+
+    <section id="parents" class="reveal">
+      <div class="section-head"><span class="small-title" data-i18n="parentSmall">Parent Psychoeducation</span><h2 data-i18n="parentTitle">How parents can support a child</h2><p data-i18n="parentText">Parents play an important role in improving a child's emotional wellbeing, confidence, and academic progress.</p></div>
+      <div class="grid-2">
+        <article class="card psycho-card"><div class="icon">💬</div><h3 data-i18n="p1Title">Respond instead of scolding</h3><p data-i18n="p1Text">A child's anger, silence, crying, or homework avoidance may be a sign of stress, fear of failure, or low confidence.</p><div class="example-box"><p><span class="dont" data-i18n="dontSay">Instead of:</span> <span data-i18n="p1Dont">You never study.</span></p><p><span class="do" data-i18n="say">Say:</span> <span data-i18n="p1Do">Let's do this work in small steps.</span></p></div></article>
+        <article class="card psycho-card"><div class="icon">⭐</div><h3 data-i18n="p2Title">Praise effort, not only marks</h3><p data-i18n="p2Text">When parents praise effort, the child feels encouraged to keep trying. Marks are important, but effort builds confidence.</p><div class="example-box" data-i18n="p2Example">Helpful words: You tried well. You improved from yesterday. Mistakes help us learn.</div></article>
+        <article class="card psycho-card"><div class="icon">⏰</div><h3 data-i18n="p3Title">Build a home study routine</h3><p data-i18n="p3Text">Keep a fixed homework time, give short breaks, reduce mobile distraction, and divide difficult tasks into small parts.</p></article>
+        <article class="card psycho-card"><div class="icon">🚦</div><h3 data-i18n="p4Title">Know when to seek help</h3><p data-i18n="p4Text">Seek counselling support if the child avoids schoolwork, cries often, gets angry frequently, says negative things about self, or repeatedly struggles in reading, writing, or math.</p></article>
+      </div>
+    </section>
+
+    <section id="teachers" class="reveal">
+      <div class="section-head"><span class="small-title" data-i18n="teacherSmall">Teacher Support Corner</span><h2 data-i18n="teacherTitle">How teachers can help in class</h2><p data-i18n="teacherText">Supportive teachers can reduce shame, improve learning, and identify children who need counselling support.</p></div>
+      <div class="grid-2">
+        <article class="card psycho-card"><div class="icon">🔍</div><h3 data-i18n="t1Title">Recognize learning difficulties</h3><p data-i18n="t1Text">If a child repeatedly struggles with reading, writing, spelling, concentration, or word problems, avoid labelling them as lazy. They may have a skill gap.</p></article>
+        <article class="card psycho-card"><div class="icon">🧩</div><h3 data-i18n="t2Title">Break instructions into steps</h3><p data-i18n="t2Text">Use short instructions. For example: read the question, underline keywords, choose the operation, then solve slowly.</p></article>
+        <article class="card psycho-card"><div class="icon">🎨</div><h3 data-i18n="t3Title">Use visual and activity-based learning</h3><p data-i18n="t3Text">Flashcards, worksheets, drawing, word games, emotion cards, and reward stickers can increase participation and confidence.</p></article>
+        <article class="card psycho-card"><div class="icon">📩</div><h3 data-i18n="t4Title">Refer when needed</h3><p data-i18n="t4Text">Refer to a counsellor if the child avoids work, becomes anxious during tests, shows withdrawal or anger, or has repeated academic failure.</p></article>
+      </div>
+    </section>
+
+    <section id="study" class="reveal">
+      <div class="section-head"><span class="small-title" data-i18n="studySmall">Study Helper</span><h2 data-i18n="studyTitle">Small tools for big learning</h2><p data-i18n="studyText">These simple strategies can help children with reading, writing, and Mathematics word problems.</p></div>
+      <div class="grid-3">
+        <article class="card"><div class="icon">🔤</div><h3 data-i18n="s1Title">Reading Help</h3><p data-i18n="s1Text">Break long words into small sounds or syllables. Read slowly and repeat difficult words.</p></article>
+        <article class="card"><div class="icon">✍️</div><h3 data-i18n="s2Title">Writing Help</h3><p data-i18n="s2Text">Listen to the word, say it aloud, break it into sounds, and then write it carefully.</p></article>
+        <article class="card"><div class="icon">➕</div><h3 data-i18n="s3Title">Math Word Problems</h3><p data-i18n="s3Text">Underline keywords like total, remaining, each, and shared equally to choose the correct operation.</p></article>
+      </div>
+    </section>
+
+    <section id="tree" class="reveal">
+      <div class="section-head"><span class="small-title" data-i18n="treeSmall">Strength Tree</span><h2 data-i18n="treeTitle">Grow your strengths</h2><p data-i18n="treeText">Write support, strengths, achievements, and goals. Your tree will fill with your words.</p></div>
+      <div class="tree-wrap">
+        <div class="card tree-form">
+          <label for="roots" data-i18n="rootsLabel">Roots: People who support me</label><input id="roots" placeholder="Mother, brother, teacher" data-placeholder-en="Mother, brother, teacher" data-placeholder-ur="امی، بھائی، استاد" />
+          <label for="trunk" data-i18n="trunkLabel">Trunk: My strengths</label><input id="trunk" placeholder="Kind, hardworking, helpful" data-placeholder-en="Kind, hardworking, helpful" data-placeholder-ur="مہربان، محنتی، مددگار" />
+          <label for="leaves" data-i18n="leavesLabel">Leaves: My achievements</label><input id="leaves" placeholder="I completed homework" data-placeholder-en="I completed homework" data-placeholder-ur="میں نے ہوم ورک مکمل کیا" />
+          <label for="branches" data-i18n="branchesLabel">Branches: My goals</label><input id="branches" placeholder="Read better, stay calm" data-placeholder-en="Read better, stay calm" data-placeholder-ur="اچھا پڑھنا، پرسکون رہنا" />
+          <button class="btn btn-primary" id="growTree" data-i18n="growBtn">Grow My Tree</button>
+        </div>
+        <div class="tree-art"><div class="sun"></div><div class="ground"></div><div class="tree"><div class="crown"></div><div class="trunk"></div><div class="leaf-note leaf1" id="noteRoots">Support</div><div class="leaf-note leaf2" id="noteTrunk">Strength</div><div class="leaf-note leaf3" id="noteLeaves">Achievement</div><div class="leaf-note leaf4" id="noteBranches">Goal</div></div></div>
+      </div>
+    </section>
+
+    <section id="worksheets" class="reveal">
+      <div class="section-head"><span class="small-title" data-i18n="worksSmall">Worksheet Ideas</span><h2 data-i18n="worksTitle">Printable counselling activities</h2><p data-i18n="worksText">These activities can be used in child counselling sessions, classrooms, or home practice.</p></div>
+      <div class="worksheet-grid">
+        <article class="card worksheet"><div><div class="icon">🌳</div><h3 data-i18n="w1Title">Strength Tree</h3><p data-i18n="w1Text">For confidence and self-awareness.</p></div><span class="tag" data-i18n="wTag1">Self-esteem</span></article>
+        <article class="card worksheet"><div><div class="icon">🌡️</div><h3 data-i18n="w2Title">Feelings Thermometer</h3><p data-i18n="w2Text">For naming and rating emotions.</p></div><span class="tag" data-i18n="wTag2">Emotions</span></article>
+        <article class="card worksheet"><div><div class="icon">🔺</div><h3 data-i18n="w3Title">Thought Feeling Behavior</h3><p data-i18n="w3Text">For understanding links between thoughts and actions.</p></div><span class="tag" data-i18n="wTag3">CBT</span></article>
+        <article class="card worksheet"><div><div class="icon">🧘</div><h3 data-i18n="w4Title">Calm Down Card</h3><p data-i18n="w4Text">For breathing, grounding, and self-talk.</p></div><span class="tag" data-i18n="wTag4">Coping</span></article>
+      </div>
+    </section>
+
+
+    <section id="warning" class="reveal">
+      <div class="section-head">
+        <span class="small-title" data-i18n="warningSmall">Warning Signs</span>
+        <h2 data-i18n="warningTitle">When a child may need counselling</h2>
+        <p data-i18n="warningText">These signs do not mean that a child is “bad” or “weak.” They are signals that the child may need understanding, support, and professional help.</p>
+      </div>
+
+      <div class="grid-2">
+        <article class="card psycho-card">
+          <div class="icon">⚡</div>
+          <h3 data-i18n="bWarnTitle">Behavioural signs</h3>
+          <p data-i18n="bWarnText">Repeated aggression, frequent fights, lying, stealing, rule breaking, extreme stubbornness, hyperactivity, impulsive actions, or sudden school refusal.</p>
+        </article>
+
+        <article class="card psycho-card">
+          <div class="icon">💧</div>
+          <h3 data-i18n="eWarnTitle">Emotional signs</h3>
+          <p data-i18n="eWarnText">Frequent crying, sadness, fear, anger outbursts, mood changes, irritability, sleep or appetite changes, or feeling worried most of the time.</p>
+        </article>
+
+        <article class="card psycho-card">
+          <div class="icon">🤝</div>
+          <h3 data-i18n="sWarnTitle">Social signs</h3>
+          <p data-i18n="sWarnText">Withdrawal from friends or family, difficulty making friends, bullying others, being bullied, avoiding group activities, or suddenly becoming very quiet.</p>
+        </article>
+
+        <article class="card psycho-card">
+          <div class="icon">🧠</div>
+          <h3 data-i18n="pWarnTitle">Psychological and learning signs</h3>
+          <p data-i18n="pWarnText">Low confidence, negative self-talk, repeated academic failure, attention problems, fear of mistakes, trauma reactions, or saying “I am useless” or “I cannot do anything.”</p>
+        </article>
+      </div>
+
+      <div class="card" style="margin-top: 20px;">
+        <div class="icon">🚦</div>
+        <h3 data-i18n="needHelpTitle">Counselling is needed when</h3>
+        <ul class="tips-list">
+          <li data-i18n="needHelp1">The problem continues for several weeks and does not improve with normal support.</li>
+          <li data-i18n="needHelp2">The child’s school, home life, friendships, sleep, appetite, or confidence is affected.</li>
+          <li data-i18n="needHelp3">Parents or teachers feel confused about how to support the child.</li>
+          <li data-i18n="needHelp4">The child talks about harming self or others, shows extreme fear, or seems unsafe. In this case, seek urgent help from a hospital or emergency service.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="resources" class="reveal">
+      <div class="section-head">
+        <span class="small-title" data-i18n="resourceSmall">Counselling Services and Resources</span>
+        <h2 data-i18n="resourceTitle">Reliable support options in Lahore</h2>
+        <p data-i18n="resourceText">Always call or check the official website before visiting because timings, fees, and appointment procedures may change.</p>
+      </div>
+
+      <div class="grid-2">
+        <article class="card psycho-card">
+          <div class="icon">🏫</div>
+          <h3 data-i18n="r1Title">UMT Happiness Center</h3>
+          <p data-i18n="r1Text">School of Professional Psychology, University of Management and Technology, Johar Town, Lahore. Offers clinical counselling services, appointment support, and psychoeducational activities.</p>
+          <a class="btn btn-secondary" href="https://spp.umt.edu.pk/happinesscenter/Services-and-Appointment.aspx" target="_blank" rel="noopener" data-i18n="visitSite">Visit official site</a>
+        </article>
+
+        <article class="card psycho-card">
+          <div class="icon">🏥</div>
+          <h3 data-i18n="r2Title">The Children’s Hospital Lahore</h3>
+          <p data-i18n="r2Text">Developmental and Behavioral Pediatric services and Psychiatry services for concerns such as autism, ADHD, learning difficulties, emotional problems, and family counselling.</p>
+          <a class="btn btn-secondary" href="https://chich.edu.pk/developmental" target="_blank" rel="noopener" data-i18n="visitSite">Visit official site</a>
+        </article>
+
+        <article class="card psycho-card">
+          <div class="icon">🌈</div>
+          <h3 data-i18n="r3Title">IMPACT for Kids</h3>
+          <p data-i18n="r3Text">Lahore-based support for children and families, including psychological assessment, counselling sessions, learning difficulties, ADHD, autism, speech and language support, and parent training.</p>
+          <a class="btn btn-secondary" href="https://impactforkids.com/training-and-counseling/" target="_blank" rel="noopener" data-i18n="visitSite">Visit official site</a>
+        </article>
+
+        <article class="card psycho-card">
+          <div class="icon">💚</div>
+          <h3 data-i18n="r4Title">Fountain House Pakistan</h3>
+          <p data-i18n="r4Text">A long-running Lahore mental health organization providing psychiatric treatment, psychosocial rehabilitation, and support programs, including services related to children with special needs.</p>
+          <a class="btn btn-secondary" href="https://www.fountainhouse.com.pk/" target="_blank" rel="noopener" data-i18n="visitSite">Visit official site</a>
+        </article>
+
+        <article class="card psycho-card">
+          <div class="icon">🕊️</div>
+          <h3 data-i18n="r5Title">Therapy Works Lahore</h3>
+          <p data-i18n="r5Text">Provides outpatient psychotherapy and psychiatric services. Their Lahore office is listed in DHA, Lahore.</p>
+          <a class="btn btn-secondary" href="https://therapyworks.com.pk/" target="_blank" rel="noopener" data-i18n="visitSite">Visit official site</a>
+        </article>
+
+        <article class="card psycho-card">
+          <div class="icon">📌</div>
+          <h3 data-i18n="r6Title">Important note</h3>
+          <p data-i18n="r6Text">These names are shared for awareness and referral guidance only. Families should verify credentials, availability, fees, and suitability before booking an appointment.</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p data-i18n="footerNote">This webpage is created for psychoeducational and portfolio purposes only. It is not a replacement for professional counselling or psychological assessment.</p>
+      <p style="margin-top:10px;"><strong>© 2026 Ambreen Sarfraz</strong> | <span data-i18n="footerName">Child Counselling Toolkit</span></p>
+    </footer>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        brand:"Feel, Learn, Grow",navRoles:"Roles",navFeelings:"Feelings",navParents:"Parents",navTeachers:"Teachers",navWarning:"Warning Signs",navResources:"Resources",navWorksheets:"Worksheets",
+        badge:"✨ Child Counselling Toolkit",heroTitleA:"Feel.",heroTitleB:"Learn.",heroTitleC:"Grow.",heroText:"A creative and interactive space for children, parents, and teachers to understand emotions, learning difficulties, confidence, and simple counselling strategies.",startBtn:"Start Exploring",calmBtn:"Try Calm Down Box",mainCardTitle:"A safe place to grow",mainCardText:"Small steps, kind words, and supportive adults can help every child move forward.",
+        rolesSmall:"Choose Your Role",rolesTitle:"Who are you here for?",rolesText:"Select a role to see simple counselling guidance designed for that person.",childRole:"I am a Child",childRoleText:"Understand your feelings, learn calming tools, and build confidence in small steps.",parentRole:"I am a Parent",parentRoleText:"Learn how to respond with support, reduce pressure, and encourage effort.",teacherRole:"I am a Teacher",teacherRoleText:"Support learning difficulties with kind language, clear steps, and timely referral.",
+        childDetailTitle:"For Children",childDetailText:"Your feelings are important. You can learn to name your feelings, ask for help, try again after mistakes, and use simple tools when schoolwork feels hard.",childPill1:"Feelings Check-In",childPill2:"Calm Breathing",childPill3:"Strength Tree",childPill4:"Study Helper",parentDetailTitle:"For Parents",parentDetailText:"Children need patience, routine, encouragement, and emotional safety. When parents praise effort and listen calmly, children become more confident and willing to learn.",parentPill1:"Listen first",parentPill2:"Avoid comparison",parentPill3:"Praise effort",parentPill4:"Use routine",teacherDetailTitle:"For Teachers",teacherDetailText:"A child who struggles may not be lazy. They may need clearer instructions, extra practice, emotional support, or counselling referral.",teacherPill1:"Break steps",teacherPill2:"Use visuals",teacherPill3:"Give feedback",teacherPill4:"Refer early",
+        emotionSmall:"Feelings Check-In",emotionTitle:"How are you feeling today?",emotionText:"Click an emotion and read a simple supportive tip.",happy:"Happy",sad:"Sad",angry:"Angry",worried:"Worried",confused:"Confused",
+        calmSmall:"Calm Down Box",calmTitle:"Pause, breathe, and feel safe",calmText:"This box gives children quick tools to use when they feel stressed, angry, or worried.",breatheCircle:"Breathe In<br>Breathe Out",calmTip1:"Take five slow breaths and relax your shoulders.",calmTip2:"Name five things you can see around you.",calmTip3:"Say: I can try one small step.",calmTip4:"Ask a safe adult for help when the feeling feels too big.",
+        parentSmall:"Parent Psychoeducation",parentTitle:"How parents can support a child",parentText:"Parents play an important role in improving a child's emotional wellbeing, confidence, and academic progress.",p1Title:"Respond instead of scolding",p1Text:"A child's anger, silence, crying, or homework avoidance may be a sign of stress, fear of failure, or low confidence.",dontSay:"Instead of:",say:"Say:",p1Dont:"You never study.",p1Do:"Let's do this work in small steps.",p2Title:"Praise effort, not only marks",p2Text:"When parents praise effort, the child feels encouraged to keep trying. Marks are important, but effort builds confidence.",p2Example:"Helpful words: You tried well. You improved from yesterday. Mistakes help us learn.",p3Title:"Build a home study routine",p3Text:"Keep a fixed homework time, give short breaks, reduce mobile distraction, and divide difficult tasks into small parts.",p4Title:"Know when to seek help",p4Text:"Seek counselling support if the child avoids schoolwork, cries often, gets angry frequently, says negative things about self, or repeatedly struggles in reading, writing, or math.",
+        teacherSmall:"Teacher Support Corner",teacherTitle:"How teachers can help in class",teacherText:"Supportive teachers can reduce shame, improve learning, and identify children who need counselling support.",t1Title:"Recognize learning difficulties",t1Text:"If a child repeatedly struggles with reading, writing, spelling, concentration, or word problems, avoid labelling them as lazy. They may have a skill gap.",t2Title:"Break instructions into steps",t2Text:"Use short instructions. For example: read the question, underline keywords, choose the operation, then solve slowly.",t3Title:"Use visual and activity-based learning",t3Text:"Flashcards, worksheets, drawing, word games, emotion cards, and reward stickers can increase participation and confidence.",t4Title:"Refer when needed",t4Text:"Refer to a counsellor if the child avoids work, becomes anxious during tests, shows withdrawal or anger, or has repeated academic failure.",
+        studySmall:"Study Helper",studyTitle:"Small tools for big learning",studyText:"These simple strategies can help children with reading, writing, and Mathematics word problems.",s1Title:"Reading Help",s1Text:"Break long words into small sounds or syllables. Read slowly and repeat difficult words.",s2Title:"Writing Help",s2Text:"Listen to the word, say it aloud, break it into sounds, and then write it carefully.",s3Title:"Math Word Problems",s3Text:"Underline keywords like total, remaining, each, and shared equally to choose the correct operation.",
+        treeSmall:"Strength Tree",treeTitle:"Grow your strengths",treeText:"Write support, strengths, achievements, and goals. Your tree will fill with your words.",rootsLabel:"Roots: People who support me",trunkLabel:"Trunk: My strengths",leavesLabel:"Leaves: My achievements",branchesLabel:"Branches: My goals",growBtn:"Grow My Tree",
+        warningSmall:"Warning Signs",warningTitle:"When a child may need counselling",warningText:"These signs do not mean that a child is bad or weak. They are signals that the child may need understanding, support, and professional help.",bWarnTitle:"Behavioural signs",bWarnText:"Repeated aggression, frequent fights, lying, stealing, rule breaking, extreme stubbornness, hyperactivity, impulsive actions, or sudden school refusal.",eWarnTitle:"Emotional signs",eWarnText:"Frequent crying, sadness, fear, anger outbursts, mood changes, irritability, sleep or appetite changes, or feeling worried most of the time.",sWarnTitle:"Social signs",sWarnText:"Withdrawal from friends or family, difficulty making friends, bullying others, being bullied, avoiding group activities, or suddenly becoming very quiet.",pWarnTitle:"Psychological and learning signs",pWarnText:"Low confidence, negative self-talk, repeated academic failure, attention problems, fear of mistakes, trauma reactions, or saying I am useless or I cannot do anything.",needHelpTitle:"Counselling is needed when",needHelp1:"The problem continues for several weeks and does not improve with normal support.",needHelp2:"The child’s school, home life, friendships, sleep, appetite, or confidence is affected.",needHelp3:"Parents or teachers feel confused about how to support the child.",needHelp4:"The child talks about harming self or others, shows extreme fear, or seems unsafe. In this case, seek urgent help from a hospital or emergency service.",resourceSmall:"Counselling Services and Resources",resourceTitle:"Reliable support options in Lahore",resourceText:"Always call or check the official website before visiting because timings, fees, and appointment procedures may change.",r1Title:"UMT Happiness Center",r1Text:"School of Professional Psychology, University of Management and Technology, Johar Town, Lahore. Offers clinical counselling services, appointment support, and psychoeducational activities.",r2Title:"The Children’s Hospital Lahore",r2Text:"Developmental and Behavioral Pediatric services and Psychiatry services for concerns such as autism, ADHD, learning difficulties, emotional problems, and family counselling.",r3Title:"IMPACT for Kids",r3Text:"Lahore-based support for children and families, including psychological assessment, counselling sessions, learning difficulties, ADHD, autism, speech and language support, and parent training.",r4Title:"Fountain House Pakistan",r4Text:"A long-running Lahore mental health organization providing psychiatric treatment, psychosocial rehabilitation, and support programs, including services related to children with special needs.",r5Title:"Therapy Works Lahore",r5Text:"Provides outpatient psychotherapy and psychiatric services. Their Lahore office is listed in DHA, Lahore.",r6Title:"Important note",r6Text:"These names are shared for awareness and referral guidance only. Families should verify credentials, availability, fees, and suitability before booking an appointment.",visitSite:"Visit official site",worksSmall:"Worksheet Ideas",worksTitle:"Printable counselling activities",worksText:"These activities can be used in child counselling sessions, classrooms, or home practice.",w1Title:"Strength Tree",w1Text:"For confidence and self-awareness.",w2Title:"Feelings Thermometer",w2Text:"For naming and rating emotions.",w3Title:"Thought Feeling Behavior",w3Text:"For understanding links between thoughts and actions.",w4Title:"Calm Down Card",w4Text:"For breathing, grounding, and self-talk.",wTag1:"Self-esteem",wTag2:"Emotions",wTag3:"CBT",wTag4:"Coping",footerNote:"This webpage is created for psychoeducational and portfolio purposes only. It is not a replacement for professional counselling or psychological assessment.",footerName:"Child Counselling Toolkit"
+      },
+      ur: {
+        brand:"محسوس کریں، سیکھیں، آگے بڑھیں",navRoles:"کردار",navFeelings:"جذبات",navParents:"والدین",navTeachers:"اساتذہ",navWarning:"علامات",navResources:"سروسز",navWorksheets:"ورک شیٹس",
+        badge:"✨ بچوں کی کونسلنگ ٹول کٹ",heroTitleA:"محسوس کریں",heroTitleB:"سیکھیں",heroTitleC:"آگے بڑھیں",heroText:"یہ بچوں، والدین اور اساتذہ کے لیے ایک خوبصورت اور آسان جگہ ہے جہاں وہ جذبات، پڑھائی کی مشکلات، خود اعتمادی، اور کونسلنگ کی آسان حکمت عملیاں سمجھ سکتے ہیں۔",startBtn:"شروع کریں",calmBtn:"پرسکون ہونے کا طریقہ",mainCardTitle:"بڑھنے کے لیے محفوظ جگہ",mainCardText:"چھوٹے قدم، نرم الفاظ، اور مددگار بڑے ہر بچے کو آگے بڑھنے میں مدد دے سکتے ہیں۔",
+        rolesSmall:"اپنا کردار منتخب کریں",rolesTitle:"آپ یہاں کس کے لیے آئے ہیں؟",rolesText:"اپنا کردار منتخب کریں اور آسان کونسلنگ رہنمائی پڑھیں۔",childRole:"میں بچہ ہوں",childRoleText:"اپنے جذبات کو سمجھیں، پرسکون ہونے کے طریقے سیکھیں، اور آہستہ آہستہ اعتماد بڑھائیں۔",parentRole:"میں والدین ہوں",parentRoleText:"بچے کو سپورٹ دینے، دباؤ کم کرنے، اور کوشش کی تعریف کرنے کے طریقے سیکھیں۔",teacherRole:"میں استاد ہوں",teacherRoleText:"نرم زبان، آسان قدم، اور بروقت ریفرل کے ذریعے بچے کی مدد کریں۔",
+        childDetailTitle:"بچوں کے لیے",childDetailText:"آپ کے جذبات اہم ہیں۔ آپ اپنے جذبات کا نام لینا، مدد مانگنا، غلطی کے بعد دوبارہ کوشش کرنا، اور مشکل پڑھائی کے وقت آسان طریقے استعمال کرنا سیکھ سکتے ہیں۔",childPill1:"جذبات چیک کریں",childPill2:"سانس کی مشق",childPill3:"طاقت کا درخت",childPill4:"پڑھائی میں مدد",parentDetailTitle:"والدین کے لیے",parentDetailText:"بچوں کو صبر، معمول، حوصلہ افزائی، اور جذباتی تحفظ کی ضرورت ہوتی ہے۔ جب والدین کوشش کی تعریف کرتے ہیں اور سکون سے سنتے ہیں تو بچہ زیادہ پراعتماد ہوتا ہے۔",parentPill1:"پہلے سنیں",parentPill2:"موازنہ نہ کریں",parentPill3:"کوشش کی تعریف کریں",parentPill4:"معمول بنائیں",teacherDetailTitle:"اساتذہ کے لیے",teacherDetailText:"مشکل محسوس کرنے والا بچہ لازمی سست نہیں ہوتا۔ اسے آسان ہدایات، اضافی مشق، جذباتی مدد، یا کونسلنگ ریفرل کی ضرورت ہو سکتی ہے۔",teacherPill1:"قدم چھوٹے کریں",teacherPill2:"تصویری مدد دیں",teacherPill3:"فیڈبیک دیں",teacherPill4:"بروقت ریفر کریں",
+        emotionSmall:"جذبات چیک کریں",emotionTitle:"آج آپ کیسا محسوس کر رہے ہیں؟",emotionText:"کسی جذبے پر کلک کریں اور آسان مددگار مشورہ پڑھیں۔",happy:"خوش",sad:"اداس",angry:"غصہ",worried:"پریشان",confused:"الجھن",
+        calmSmall:"پرسکون باکس",calmTitle:"رکیں، سانس لیں، اور خود کو محفوظ محسوس کریں",calmText:"یہ باکس بچوں کو اس وقت مدد دیتا ہے جب وہ پریشان، غصے میں، یا ڈرے ہوئے ہوں۔",breatheCircle:"سانس اندر لیں<br>سانس باہر نکالیں",calmTip1:"پانچ آہستہ سانسیں لیں اور کندھے ڈھیلے کریں۔",calmTip2:"اپنے آس پاس پانچ چیزوں کے نام لیں جو آپ دیکھ سکتے ہیں۔",calmTip3:"خود سے کہیں: میں ایک چھوٹا قدم لے سکتا ہوں۔",calmTip4:"اگر احساس بہت بڑا لگے تو کسی محفوظ بڑے سے مدد مانگیں۔",
+        parentSmall:"والدین کے لیے سائیکوایجوکیشن",parentTitle:"والدین بچے کی مدد کیسے کر سکتے ہیں؟",parentText:"والدین بچے کی جذباتی صحت، اعتماد، اور تعلیمی بہتری میں بہت اہم کردار ادا کرتے ہیں۔",p1Title:"ڈانٹنے کے بجائے سمجھ کر جواب دیں",p1Text:"بچے کا غصہ، خاموشی، رونا، یا ہوم ورک سے بچنا کبھی کبھی دباؤ، ناکامی کے ڈر، یا کم اعتماد کی نشانی ہو سکتا ہے۔",dontSay:"یہ نہ کہیں:",say:"یہ کہیں:",p1Dont:"تم کبھی نہیں پڑھتے۔",p1Do:"چلو اس کام کو چھوٹے قدموں میں کرتے ہیں۔",p2Title:"صرف نمبروں نہیں، کوشش کی تعریف کریں",p2Text:"جب والدین کوشش کی تعریف کرتے ہیں تو بچہ دوبارہ کوشش کرنے کے لیے حوصلہ محسوس کرتا ہے۔ نمبر اہم ہیں، لیکن کوشش اعتماد بناتی ہے۔",p2Example:"مددگار جملے: تم نے اچھی کوشش کی۔ تم کل سے بہتر ہو۔ غلطی سے ہم سیکھتے ہیں۔",p3Title:"گھر میں پڑھائی کا معمول بنائیں",p3Text:"ہوم ورک کا وقت مقرر کریں، چھوٹے وقفے دیں، موبائل کا استعمال کم کریں، اور مشکل کام کو چھوٹے حصوں میں تقسیم کریں۔",p4Title:"کب مدد لینی چاہیے؟",p4Text:"اگر بچہ پڑھائی سے بھاگے، بار بار روئے، غصہ کرے، اپنے بارے میں منفی باتیں کرے، یا پڑھنے، لکھنے، یا ریاضی میں مسلسل مشکل محسوس کرے تو کونسلنگ سپورٹ لیں۔",
+        teacherSmall:"اساتذہ کے لیے رہنمائی",teacherTitle:"اساتذہ کلاس میں کیسے مدد کر سکتے ہیں؟",teacherText:"مددگار استاد بچے کی شرمندگی کم کر سکتا ہے، سیکھنے کو بہتر بنا سکتا ہے، اور بروقت مدد کی نشاندہی کر سکتا ہے۔",t1Title:"سیکھنے کی مشکلات کو پہچانیں",t1Text:"اگر بچہ بار بار پڑھنے، لکھنے، ہجے، توجہ، یا لفظی سوالات میں مشکل محسوس کرے تو اسے سست نہ کہیں۔ ہو سکتا ہے اس کی بنیادی مہارت کمزور ہو۔",t2Title:"ہدایات کو چھوٹے قدموں میں دیں",t2Text:"مختصر ہدایات دیں۔ مثال کے طور پر: سوال پڑھو، اہم الفاظ پر لائن لگاؤ، عمل منتخب کرو، پھر آہستہ حل کرو۔",t3Title:"تصویری اور سرگرمی پر مبنی تعلیم دیں",t3Text:"فلیش کارڈز، ورک شیٹس، ڈرائنگ، لفظی کھیل، جذباتی کارڈز، اور اسٹیکرز بچے کی شرکت اور اعتماد بڑھا سکتے ہیں۔",t4Title:"ضرورت ہو تو ریفر کریں",t4Text:"اگر بچہ کام سے بچے، ٹیسٹ میں بہت پریشان ہو، خاموش یا غصے والا ہو جائے، یا بار بار ناکامی کا سامنا کرے تو اسے کونسلر کے پاس ریفر کریں۔",
+        studySmall:"پڑھائی میں مدد",studyTitle:"بڑی سیکھ کے لیے چھوٹے طریقے",studyText:"یہ آسان حکمت عملیاں بچوں کو پڑھنے، لکھنے، اور ریاضی کے لفظی سوالات میں مدد دے سکتی ہیں۔",s1Title:"پڑھنے میں مدد",s1Text:"لمبے الفاظ کو چھوٹی آوازوں یا حصوں میں توڑیں۔ آہستہ پڑھیں اور مشکل الفاظ دہرائیں۔",s2Title:"لکھنے میں مدد",s2Text:"لفظ سنیں، اسے بولیں، آوازوں میں توڑیں، پھر احتیاط سے لکھیں۔",s3Title:"ریاضی کے لفظی سوالات",s3Text:"اہم الفاظ جیسے کل، باقی، ہر ایک، اور برابر تقسیم پر لائن لگائیں تاکہ درست عمل منتخب ہو سکے۔",
+        treeSmall:"طاقت کا درخت",treeTitle:"اپنی خوبیاں بڑھائیں",treeText:"مدد کرنے والے لوگ، خوبیاں، کامیابیاں، اور مقاصد لکھیں۔ آپ کا درخت آپ کے الفاظ سے بھر جائے گا۔",rootsLabel:"جڑیں: میری مدد کرنے والے لوگ",trunkLabel:"تنا: میری خوبیاں",leavesLabel:"پتے: میری کامیابیاں",branchesLabel:"شاخیں: میرے مقاصد",growBtn:"میرا درخت بنائیں",
+        warningSmall:"انتباہی علامات",warningTitle:"بچے کو کب کونسلنگ کی ضرورت ہو سکتی ہے؟",warningText:"یہ علامات اس بات کا مطلب نہیں کہ بچہ برا یا کمزور ہے۔ یہ اشارے ہیں کہ بچے کو سمجھ، مدد، اور پروفیشنل سپورٹ کی ضرورت ہو سکتی ہے۔",bWarnTitle:"رویے کی علامات",bWarnText:"بار بار غصہ، لڑائی جھگڑا، جھوٹ بولنا، چوری، اصول توڑنا، بہت زیادہ ضد، بہت زیادہ بے چینی، جلد بازی، یا اچانک اسکول جانے سے انکار۔",eWarnTitle:"جذباتی علامات",eWarnText:"بار بار رونا، اداسی، خوف، غصے کے دورے، موڈ بدلنا، چڑچڑا پن، نیند یا بھوک میں تبدیلی، یا زیادہ وقت پریشان رہنا۔",sWarnTitle:"سماجی علامات",sWarnText:"دوستوں یا گھر والوں سے دور رہنا، دوست بنانے میں مشکل، دوسروں کو تنگ کرنا، خود تنگ کیا جانا، گروپ سرگرمیوں سے بچنا، یا اچانک بہت خاموش ہو جانا۔",pWarnTitle:"نفسیاتی اور تعلیمی علامات",pWarnText:"کم اعتماد، اپنے بارے میں منفی باتیں، بار بار تعلیمی ناکامی، توجہ کی مشکل، غلطی کا خوف، صدمے کے اثرات، یا یہ کہنا کہ میں نکما ہوں یا مجھ سے کچھ نہیں ہوتا۔",needHelpTitle:"کونسلنگ کی ضرورت کب ہوتی ہے؟",needHelp1:"جب مسئلہ کئی ہفتوں تک جاری رہے اور عام مدد سے بہتر نہ ہو۔",needHelp2:"جب بچے کی پڑھائی، گھر، دوستی، نیند، بھوک، یا خود اعتمادی متاثر ہو۔",needHelp3:"جب والدین یا اساتذہ کو سمجھ نہ آئے کہ بچے کی مدد کیسے کرنی ہے۔",needHelp4:"جب بچہ خود کو یا دوسروں کو نقصان پہنچانے کی بات کرے، بہت زیادہ خوف میں ہو، یا غیر محفوظ لگے۔ ایسی صورت میں فوراً ہسپتال یا ایمرجنسی سروس سے مدد لیں۔",resourceSmall:"کونسلنگ سروسز اور وسائل",resourceTitle:"لاہور میں قابل اعتماد مدد کے ذرائع",resourceText:"جانے سے پہلے ہمیشہ کال کریں یا آفیشل ویب سائٹ چیک کریں کیونکہ اوقات، فیس، اور اپائنٹمنٹ کا طریقہ بدل سکتا ہے۔",r1Title:"یو ایم ٹی ہیپی نیس سنٹر",r1Text:"اسکول آف پروفیشنل سائیکالوجی، یونیورسٹی آف مینجمنٹ اینڈ ٹیکنالوجی، جوہر ٹاؤن، لاہور۔ یہاں کلینیکل کونسلنگ، اپائنٹمنٹ سپورٹ، اور سائیکوایجوکیشنل سرگرمیاں موجود ہیں۔",r2Title:"چلڈرن ہسپتال لاہور",r2Text:"یہاں ڈیولپمنٹل اینڈ بیہیویئرل پیڈیاٹرک اور سائیکاٹری سروسز موجود ہیں، جیسے آٹزم، اے ڈی ایچ ڈی، لرننگ مشکلات، جذباتی مسائل، اور فیملی کونسلنگ۔",r3Title:"امپیکٹ فار کڈز",r3Text:"لاہور میں بچوں اور خاندانوں کے لیے سپورٹ، جس میں سائیکولوجیکل اسیسمنٹ، کونسلنگ سیشنز، لرننگ مشکلات، اے ڈی ایچ ڈی، آٹزم، اسپیچ اینڈ لینگویج سپورٹ، اور والدین کی ٹریننگ شامل ہے۔",r4Title:"فاؤنٹین ہاؤس پاکستان",r4Text:"لاہور کی ایک پرانی ذہنی صحت کی تنظیم، جو نفسیاتی علاج، سائیکوسوشل ری ہیبیلیٹیشن، اور بچوں کی خصوصی ضروریات سے متعلق سپورٹ پروگرام فراہم کرتی ہے۔",r5Title:"تھراپی ورکس لاہور",r5Text:"یہ آؤٹ پیشنٹ سائیکوتھراپی اور سائیکاٹری سروسز فراہم کرتے ہیں۔ ان کا لاہور آفس ڈی ایچ اے لاہور میں درج ہے۔",r6Title:"اہم نوٹ",r6Text:"یہ نام صرف آگاہی اور ریفرل گائیڈنس کے لیے دیے گئے ہیں۔ فیملیز اپائنٹمنٹ سے پہلے قابلیت، دستیابی، فیس، اور مناسب سروس ضرور چیک کریں۔",visitSite:"آفیشل ویب سائٹ دیکھیں",worksSmall:"ورک شیٹ آئیڈیاز",worksTitle:"پرنٹ کرنے والی کونسلنگ سرگرمیاں",worksText:"یہ سرگرمیاں بچوں کی کونسلنگ، کلاس روم، یا گھر کی مشق میں استعمال کی جا سکتی ہیں۔",w1Title:"طاقت کا درخت",w1Text:"اعتماد اور خود آگاہی کے لیے۔",w2Title:"جذبات کا تھرمامیٹر",w2Text:"جذبات کا نام لینے اور درجہ دینے کے لیے۔",w3Title:"سوچ، احساس، عمل",w3Text:"خیالات اور عمل کے تعلق کو سمجھنے کے لیے۔",w4Title:"پرسکون کارڈ",w4Text:"سانس، گراؤنڈنگ، اور مثبت خود کلامی کے لیے۔",wTag1:"خود اعتمادی",wTag2:"جذبات",wTag3:"سی بی ٹی",wTag4:"کوپنگ",footerNote:"یہ ویب صفحہ سائیکوایجوکیشن اور پورٹ فولیو کے مقصد کے لیے بنایا گیا ہے۔ یہ پروفیشنل کونسلنگ یا نفسیاتی تشخیص کا متبادل نہیں ہے۔",footerName:"بچوں کی کونسلنگ ٹول کٹ"
+      }
+    };
+    const emotionTips={en:{happy:"It is good to notice happy moments. Share your happiness with someone, write one good thing about today, or use this energy to complete a small task.",sad:"Sad feelings are allowed. Take a slow breath, talk to a trusted adult, draw what you feel, and remember that feelings can change.",angry:"Anger is a signal that something feels wrong. Count from 1 to 10, take space, breathe slowly, and use words to say what you need.",worried:"Worry can make the body feel tight. Name the worry, write one small step, ask for help, and remind yourself: I do not have to solve everything at once.",confused:"Confusion means your brain needs clearer steps. Ask someone to explain again, break the task into small parts, and try the first step only."},ur:{happy:"خوشی کو محسوس کرنا اچھی بات ہے۔ اپنی خوشی کسی سے شیئر کریں، آج کی ایک اچھی بات لکھیں، یا اس توانائی سے کوئی چھوٹا کام مکمل کریں۔",sad:"اداسی محسوس کرنا غلط نہیں ہے۔ آہستہ سانس لیں، کسی قابل اعتماد بڑے سے بات کریں، اپنا احساس ڈرائنگ میں بنائیں، اور یاد رکھیں کہ جذبات بدل سکتے ہیں۔",angry:"غصہ ایک اشارہ ہوتا ہے کہ کوئی بات مشکل لگ رہی ہے۔ ایک سے دس تک گنیں، تھوڑی جگہ لیں، آہستہ سانس لیں، اور الفاظ میں بتائیں کہ آپ کو کیا چاہیے۔",worried:"پریشانی جسم کو تھکا سکتی ہے۔ اپنی پریشانی کا نام لیں، ایک چھوٹا قدم لکھیں، مدد مانگیں، اور خود سے کہیں کہ مجھے سب کچھ ایک ساتھ حل نہیں کرنا۔",confused:"الجھن کا مطلب ہے کہ دماغ کو آسان قدم چاہیے۔ دوبارہ سمجھانے کو کہیں، کام کو چھوٹے حصوں میں تقسیم کریں، اور صرف پہلا قدم شروع کریں۔"}};
+    let currentLang="en";
+    function setLanguage(lang){currentLang=lang;document.documentElement.lang=lang==="ur"?"ur":"en";document.documentElement.dir=lang==="ur"?"rtl":"ltr";document.body.classList.toggle("urdu",lang==="ur");document.getElementById("langToggle").textContent=lang==="ur"?"Read in English":"اردو میں پڑھیں";document.querySelectorAll("[data-i18n]").forEach(el=>{const key=el.getAttribute("data-i18n");if(translations[lang][key])el.innerHTML=translations[lang][key];});document.querySelectorAll("[data-placeholder-en]").forEach(el=>{el.placeholder=lang==="ur"?el.dataset.placeholderUr:el.dataset.placeholderEn;});const activeEmotion=document.querySelector(".emotion-btn.active")?.dataset.emotion||"happy";updateEmotion(activeEmotion);updateTreeDefaults();}
+    function updateEmotion(emotion){document.getElementById("emotionTip").textContent=emotionTips[currentLang][emotion];}
+    document.getElementById("langToggle").addEventListener("click",()=>setLanguage(currentLang==="en"?"ur":"en"));
+    document.querySelectorAll(".role-card").forEach(card=>{card.addEventListener("click",()=>{document.querySelectorAll(".role-card").forEach(c=>c.classList.remove("active"));document.querySelectorAll(".role-detail").forEach(d=>d.classList.remove("active"));card.classList.add("active");document.getElementById("role-"+card.dataset.role).classList.add("active");});});
+    document.querySelectorAll(".emotion-btn").forEach(btn=>{btn.addEventListener("click",()=>{document.querySelectorAll(".emotion-btn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");updateEmotion(btn.dataset.emotion);});});
+    function updateTreeDefaults(){if(currentLang==="ur"){noteRoots.textContent=noteRoots.dataset.value||"مدد";noteTrunk.textContent=noteTrunk.dataset.value||"خوبی";noteLeaves.textContent=noteLeaves.dataset.value||"کامیابی";noteBranches.textContent=noteBranches.dataset.value||"مقصد";}else{noteRoots.textContent=noteRoots.dataset.value||"Support";noteTrunk.textContent=noteTrunk.dataset.value||"Strength";noteLeaves.textContent=noteLeaves.dataset.value||"Achievement";noteBranches.textContent=noteBranches.dataset.value||"Goal";}}
+    document.getElementById("growTree").addEventListener("click",()=>{[["noteRoots",roots.value.trim()],["noteTrunk",trunk.value.trim()],["noteLeaves",leaves.value.trim()],["noteBranches",branches.value.trim()]].forEach(([id,value])=>{const note=document.getElementById(id);if(value){note.dataset.value=value;note.textContent=value;note.animate([{transform:"scale(1)"},{transform:"scale(1.15)"},{transform:"scale(1)"}],{duration:500,easing:"ease"});}});updateTreeDefaults();});
+    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("show");});},{threshold:.12});
+    document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+    updateEmotion("happy");
+  </script>
+</body>
+</html>

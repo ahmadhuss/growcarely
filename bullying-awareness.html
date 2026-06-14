@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Bullying Awareness | SPP UMT</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#1B2A4A; --teal:#0D7377; --teal2:#14A098;
+  --amber:#E8734A; --light:#EEF4F7; --white:#fff;
+  --mid:#4A6274; --pale:#BED8E0; --red:#C0392B;
+  --purple:#7D3C98; --green:#1E8449; --orange:#E67E22;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--light);color:var(--navy);overflow-x:hidden;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(27,42,74,0.97);backdrop-filter:blur(8px);padding:14px 6vw;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:'Playfair Display',serif;font-size:17px;color:var(--white);font-weight:700;}
+.nav-logo span{color:var(--amber);}
+.nav-links{display:flex;gap:20px;list-style:none;}
+.nav-links a{font-size:12px;color:var(--pale);text-decoration:none;letter-spacing:.5px;transition:color .2s;}
+.nav-links a:hover{color:var(--amber);}
+
+/* ── HERO ── */
+.hero{min-height:100vh;background:var(--navy);display:flex;flex-direction:column;justify-content:center;padding:100px 8vw 60px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-100px;right:-100px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(13,115,119,.3) 0%,transparent 70%);}
+.hero::after{content:'';position:absolute;bottom:-60px;left:25%;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(232,115,74,.18) 0%,transparent 70%);}
+.hero-tag{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--teal2);margin-bottom:16px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(36px,6vw,72px);font-weight:900;color:var(--white);line-height:1.08;max-width:640px;margin-bottom:18px;}
+.hero h1 span{color:var(--amber);}
+.hero-sub{font-size:16px;color:var(--pale);max-width:480px;line-height:1.8;font-weight:300;}
+.hero-stats{display:flex;gap:40px;flex-wrap:wrap;margin-top:40px;}
+.stat{text-align:left;}
+.stat-n{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;color:var(--amber);line-height:1;}
+.stat-l{font-size:12px;color:var(--pale);margin-top:4px;max-width:140px;line-height:1.4;}
+.scroll-arrow{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:var(--pale);font-size:13px;display:flex;flex-direction:column;align-items:center;gap:6px;letter-spacing:2px;text-transform:uppercase;animation:bob 2s infinite;}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(7px);}}
+
+/* ── SECTION BASE ── */
+section{padding:72px 8vw;}
+.stag{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--teal2);margin-bottom:10px;}
+.stitle{font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,38px);font-weight:700;color:var(--navy);margin-bottom:8px;line-height:1.18;}
+.sline{width:50px;height:4px;background:var(--amber);border-radius:2px;margin-bottom:40px;}
+
+/* ── POLL ── */
+.poll-section{background:var(--navy);padding:72px 8vw;}
+.poll-section .stag{color:var(--teal2);}
+.poll-section .stitle{color:var(--white);}
+.polls-wrap{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+@media(max-width:680px){.polls-wrap{grid-template-columns:1fr;}}
+@media(max-width:768px){nav{display:none;}.hero{padding-top:60px;}}
+.poll-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:28px 24px;}
+.poll-q{font-size:15px;font-weight:600;color:var(--white);margin-bottom:18px;line-height:1.5;}
+.poll-options{display:flex;flex-direction:column;gap:10px;}
+.poll-opt{display:flex;align-items:center;gap:12px;cursor:pointer;padding:10px 14px;border-radius:10px;transition:background .2s;border:1.5px solid rgba(255,255,255,.1);}
+.poll-opt:hover{background:rgba(255,255,255,.08);}
+.poll-opt.selected{background:rgba(20,160,152,.18);border-color:var(--teal2);}
+.poll-opt input{accent-color:var(--teal2);width:16px;height:16px;cursor:pointer;}
+.poll-opt label{font-size:13.5px;color:var(--pale);cursor:pointer;line-height:1.4;}
+.poll-btn{margin-top:18px;background:var(--amber);color:var(--white);border:none;border-radius:10px;padding:11px 28px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s;}
+.poll-btn:hover{opacity:.88;}
+.poll-result{display:none;margin-top:18px;padding:16px;background:rgba(20,160,152,.15);border-radius:12px;border:1px solid rgba(20,160,152,.3);}
+.poll-result p{font-size:13px;color:var(--teal2);font-weight:500;line-height:1.6;}
+.bar-wrap{margin-top:10px;display:flex;flex-direction:column;gap:7px;}
+.bar-item{display:flex;align-items:center;gap:8px;}
+.bar-label{font-size:11.5px;color:var(--pale);min-width:100px;}
+.bar-track{flex:1;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;background:var(--teal2);width:0;transition:width 1s ease;}
+
+/* ── WHAT IS BULLYING ── */
+.what{background:var(--white);}
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+.pillar{background:var(--light);border-radius:16px;padding:28px 22px;border-top:4px solid var(--teal);transition:transform .2s,box-shadow .2s;}
+.pillar:nth-child(2){border-top-color:var(--amber);}
+.pillar:nth-child(3){border-top-color:var(--navy);}
+.pillar:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,.09);}
+.pillar-ico{font-size:32px;margin-bottom:12px;}
+.pillar h3{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:8px;color:var(--navy);}
+.pillar p{font-size:13px;color:var(--mid);line-height:1.7;}
+
+/* ── TYPES ── */
+.types-section{background:var(--light);}
+.types-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;}
+.type-card{border-radius:14px;padding:22px 18px;transition:transform .2s;}
+.type-card:hover{transform:scale(1.04);}
+.tc-physical{background:var(--red);}
+.tc-verbal{background:var(--teal);}
+.tc-social{background:#34495E;}
+.tc-cyber{background:var(--purple);}
+.tc-academic{background:var(--green);}
+.tc-identity{background:var(--orange);}
+.type-emo{font-size:28px;margin-bottom:10px;}
+.type-name{font-size:14px;font-weight:600;color:#fff;margin-bottom:5px;}
+.type-ex{font-size:11.5px;color:rgba(255,255,255,.82);line-height:1.5;}
+
+/* ── CASE ── */
+.case-section{background:var(--navy);}
+.case-section .stag{color:var(--teal2);}
+.case-section .stitle{color:var(--white);}
+.case-block{background:rgba(255,255,255,.05);border-left:5px solid var(--amber);border-radius:0 16px 16px 0;padding:36px 36px;max-width:800px;position:relative;}
+.case-block::before{content:'\201C';font-family:'Playfair Display',serif;font-size:120px;color:var(--teal);opacity:.18;position:absolute;top:-20px;left:20px;line-height:1;}
+.case-block p{font-size:15.5px;color:#D0DDE6;line-height:1.9;position:relative;z-index:1;}
+.case-block strong{color:var(--white);}
+.case-block em{color:var(--amber);font-style:normal;font-weight:500;}
+.case-tag{display:inline-block;background:var(--amber);color:#fff;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:999px;margin-bottom:20px;}
+
+/* ── MYTHS ── */
+.myths-section{background:var(--white);}
+.myth-table{width:100%;border-collapse:separate;border-spacing:0;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.07);}
+.myth-table th{padding:16px 22px;text-align:left;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.myth-table th:first-child{background:var(--red);color:#fff;}
+.myth-table th:last-child{background:var(--teal);color:#fff;}
+.myth-table td{padding:14px 22px;font-size:13.5px;line-height:1.6;background:#fff;border-bottom:1px solid var(--light);}
+.myth-table td:first-child{color:var(--red);font-weight:500;}
+.myth-table td:last-child{color:var(--teal);font-weight:500;}
+
+/* ── HELPLINES ── */
+.helplines{background:var(--teal);}
+.helplines .stag{color:rgba(255,255,255,.7);}
+.helplines .stitle{color:#fff;}
+.helplines .sline{background:var(--amber);}
+.helpline-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;}
+.helpline-card{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:24px 20px;backdrop-filter:blur(4px);}
+.hl-ico{font-size:28px;margin-bottom:10px;}
+.hl-name{font-size:15px;font-weight:600;color:#fff;margin-bottom:6px;}
+.hl-num{font-size:18px;font-weight:700;color:var(--amber);margin-bottom:4px;}
+.hl-desc{font-size:12px;color:rgba(255,255,255,.75);line-height:1.5;}
+
+/* ── ARTICLES ── */
+.articles-section{background:var(--light);}
+.articles-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
+.article-card{background:#fff;border-radius:16px;padding:22px 20px;border-top:4px solid var(--navy);text-decoration:none;display:block;transition:transform .2s,box-shadow .2s;}
+.article-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.09);}
+.art-tag{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--teal2);margin-bottom:8px;}
+.art-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:8px;line-height:1.5;}
+.art-src{font-size:12px;color:var(--mid);}
+.art-arrow{float:right;color:var(--amber);font-size:18px;margin-top:-2px;}
+
+/* ── INSTITUTIONS ── */
+.inst-section{background:var(--white);}
+.inst-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;}
+.inst-card{background:var(--light);border-radius:16px;padding:24px 20px;border-left:5px solid var(--teal);}
+.inst-card:nth-child(2){border-left-color:var(--amber);}
+.inst-card:nth-child(3){border-left-color:var(--purple);}
+.inst-card:nth-child(4){border-left-color:var(--green);}
+.inst-name{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px;}
+.inst-loc{font-size:12px;color:var(--teal2);margin-bottom:8px;font-weight:500;}
+.inst-desc{font-size:12.5px;color:var(--mid);line-height:1.6;margin-bottom:10px;}
+.inst-contact{font-size:12px;color:var(--mid);}
+.inst-contact strong{color:var(--navy);}
+
+/* ── FOOTER ── */
+footer{background:var(--navy);padding:44px 8vw;text-align:center;}
+.footer-logo{font-family:'Playfair Display',serif;font-size:22px;color:#fff;margin-bottom:8px;}
+.footer-logo span{color:var(--amber);}
+.footer-names{font-size:13px;color:var(--pale);margin:10px 0 4px;}
+.footer-inst{font-size:12px;color:rgba(255,255,255,.5);line-height:1.7;}
+
+/* ── FADE IN ── */
+.fi{opacity:0;transform:translateY(24px);transition:opacity .55s,transform .55s;}
+.fi.on{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Stand Up. <span>Speak Up.</span></div>
+  <ul class="nav-links">
+    <li><a href="#poll">Poll</a></li>
+    <li><a href="#what">What is Bullying</a></li>
+    <li><a href="#case">Real Case</a></li>
+    <li><a href="#myths">Myths</a></li>
+    <li><a href="#helplines">Helplines</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#institutions">Get Help</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-tag">Anti-Bullying Awareness &nbsp;•&nbsp; Pakistan</p>
+  <h1>Understanding<br/><span>Bullying</span> &amp;<br/>Its Psychological Impact on Students</h1>
+  <p class="hero-sub">Bullying is not "just teasing." It leaves real wounds on the mind, heart, and future of every child it touches.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-n">72%</div><div class="stat-l">Pakistani school children have experienced bullying (SPARC, 2022)</div></div>
+    <div class="stat"><div class="stat-n">27%</div><div class="stat-l">Students in 7 Pakistani cities were bullied — affecting academic performance (Naveed et al., 2019)</div></div>
+    <div class="stat"><div class="stat-n">9×</div><div class="stat-l">more likely to develop depression if bullied (Ttofi et al., 2011)</div></div>
+  </div>
+  <div class="scroll-arrow">↓ scroll</div>
+</section>
+
+<!-- POLL -->
+<section class="poll-section" id="poll">
+  <p class="stag fi">Share Your Experience</p>
+  <h2 class="stitle fi">Have You Been There?</h2>
+  <div class="sline fi"></div>
+  <div class="polls-wrap">
+
+    <!-- Poll 1 -->
+    <div class="poll-card fi" id="p1-card">
+      <p class="poll-q">Have you ever experienced bullying? If yes, what type?</p>
+      <div class="poll-options" id="p1-opts">
+        <label class="poll-opt"><input type="checkbox" name="p1" value="Physical"/><label>👊 Physical bullying</label></label>
+        <label class="poll-opt"><input type="checkbox" name="p1" value="Verbal"/><label>🗣️ Verbal / name-calling</label></label>
+        <label class="poll-opt"><input type="checkbox" name="p1" value="Social"/><label>🙈 Social exclusion</label></label>
+        <label class="poll-opt"><input type="checkbox" name="p1" value="Cyber"/><label>📱 Cyberbullying</label></label>
+        <label class="poll-opt"><input type="checkbox" name="p1" value="Identity"/><label>🏷️ Identity-based taunts</label></label>
+        <label class="poll-opt"><input type="checkbox" name="p1" value="No"/><label>✅ No, I have not been bullied</label></label>
+      </div>
+      <button class="poll-btn" onclick="submitPoll(1)">Submit →</button>
+      <div class="poll-result" id="p1-result"></div>
+    </div>
+
+    <!-- Poll 2 -->
+    <div class="poll-card fi" id="p2-card">
+      <p class="poll-q">Have you witnessed bullying or known someone who was a victim or target?</p>
+      <div class="poll-options" id="p2-opts">
+        <label class="poll-opt"><input type="radio" name="p2" value="Yes-witnessed"/><label>👀 Yes — I witnessed it happening</label></label>
+        <label class="poll-opt"><input type="radio" name="p2" value="Yes-known"/><label>💙 Yes — I know someone who was a victim</label></label>
+        <label class="poll-opt"><input type="radio" name="p2" value="Both"/><label>Both — witnessed and know a victim</label></label>
+        <label class="poll-opt"><input type="radio" name="p2" value="No"/><label>No — not that I know of</label></label>
+        <label class="poll-opt"><input type="radio" name="p2" value="Unsure"/><label>Not sure — maybe but did not realise</label></label>
+      </div>
+      <button class="poll-btn" onclick="submitPoll(2)">Submit →</button>
+      <div class="poll-result" id="p2-result"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHAT IS BULLYING -->
+<section class="what" id="what">
+  <p class="stag fi">The Basics</p>
+  <h2 class="stitle fi">What Is Bullying?</h2>
+  <div class="sline fi"></div>
+  <p class="fi" style="font-size:14px;color:var(--mid);max-width:640px;margin-bottom:32px;line-height:1.8;">"Bullying is repeated, intentional aggressive behaviour directed at an individual who has difficulty defending themselves, involving a real or perceived power imbalance." — <strong>Olweus, 1993</strong></p>
+  <div class="pillars">
+    <div class="pillar fi"><div class="pillar-ico">🔁</div><h3>Repetition</h3><p>It happens more than once — or has the potential to recur. A single incident is not bullying on its own.</p></div>
+    <div class="pillar fi"><div class="pillar-ico">🎯</div><h3>Intent</h3><p>The behaviour is deliberate. It is not an accident or a joke. The bully chooses to act this way.</p></div>
+    <div class="pillar fi"><div class="pillar-ico">⚖️</div><h3>Power Imbalance</h3><p>The bully has more power — physical size, social popularity, or numbers. The victim cannot easily defend themselves.</p></div>
+  </div>
+</section>
+
+<!-- TYPES -->
+<section class="types-section" id="types">
+  <p class="stag fi">Know the Forms</p>
+  <h2 class="stitle fi">Types of Bullying in Pakistani Schools</h2>
+  <div class="sline fi"></div>
+  <div class="types-grid">
+    <div class="type-card tc-physical fi"><div class="type-emo">👊</div><div class="type-name">Physical</div><div class="type-ex">Hitting, pushing, stealing tiffin or belongings. Common in govt school playgrounds.</div></div>
+    <div class="type-card tc-verbal fi"><div class="type-emo">🗣️</div><div class="type-name">Verbal</div><div class="type-ex">"Duffer," "kaali," "mazdoor ka bacha" — name-calling in front of the whole class.</div></div>
+    <div class="type-card tc-social fi"><div class="type-emo">🙈</div><div class="type-name">Social / Relational</div><div class="type-ex">Excluding from groups, spreading rumours, the "Hira Free Zone" type exclusion.</div></div>
+    <div class="type-card tc-cyber fi"><div class="type-emo">📱</div><div class="type-name">Cyberbullying</div><div class="type-ex">Fake WhatsApp accounts, humiliating TikTok reels, exclusion from class groups.</div></div>
+    <div class="type-card tc-academic fi"><div class="type-emo">📚</div><div class="type-name">Academic</div><div class="type-ex">Mocking poor grades publicly, sabotaging group assignments.</div></div>
+    <div class="type-card tc-identity fi"><div class="type-emo">🏷️</div><div class="type-name">Identity-Based</div><div class="type-ex">Targeting based on religion, ethnicity, disability, or appearance.</div></div>
+  </div>
+</section>
+
+<!-- CASE -->
+<section class="case-section" id="case">
+  <p class="stag fi">A Real Story</p>
+  <h2 class="stitle fi">Hira's Voice — Lahore</h2>
+  <div class="sline fi"></div>
+  <div class="case-block fi">
+    <span class="case-tag">🇵🇰 Government School, Lahore</span>
+    <p>
+      <strong>Hira was 13.</strong> Her classmates created a WhatsApp group called <em>"Hira Free Zone."</em> Every student was in it — except her. Every day, messages about her circulated. Her clothes. Her family's work. Her face.
+      <br/><br/>
+      She never told her mother — because she thought: <em>"Ammi will say ignore it. Or it will get worse."</em>
+      <br/><br/>
+      Three months later, Hira stopped eating. Then stopped sleeping. Then stopped going to school.
+      <br/><br/>
+      <strong>The teacher wrote "long absence" in the register. No one visited. No one asked why.</strong>
+      <br/><br/>
+      Hira was not dramatic. She was not weak. <em>She was a child who needed just one adult to notice.</em>
+    </p>
+  </div>
+</section>
+
+<!-- MYTHS -->
+<section class="myths-section" id="myths">
+  <p class="stag fi">Set the Record Straight</p>
+  <h2 class="stitle fi">Myth vs Reality</h2>
+  <div class="sline fi"></div>
+  <div class="fi">
+  <table class="myth-table">
+    <thead><tr><th>❌ Myth</th><th>✅ Reality</th></tr></thead>
+    <tbody>
+      <tr><td>"It's just teasing — toughen up"</td><td>Repeated targeting causes real psychological harm regardless of form</td></tr>
+      <tr><td>"Boys will be boys"</td><td>Physical bullying is never normal. It always requires intervention</td></tr>
+      <tr><td>"If they didn't say anything, it wasn't serious"</td><td>Most victims stay silent out of shame, fear, or distrust of adults</td></tr>
+      <tr><td>"The bully is just a bad child"</td><td>Bullies often carry their own trauma, insecurity, and unaddressed pain</td></tr>
+      <tr><td>"Counselling is for pagal people"</td><td>Seeking help is strength. Counselling is a professional tool for healing</td></tr>
+      <tr><td>"Only physical bullying is harmful"</td><td>Verbal and social bullying cause equal — sometimes greater — psychological damage</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- HELPLINES -->
+<section class="helplines" id="helplines">
+  <p class="stag fi">You Are Not Alone</p>
+  <h2 class="stitle fi">Pakistani Helplines &amp; Support</h2>
+  <div class="sline fi"></div>
+  <div class="helpline-grid">
+    <div class="helpline-card fi">
+      <div class="hl-ico">📞</div>
+      <div class="hl-name">National Youth Helpline</div>
+      <div class="hl-num">0800-69457</div>
+      <div class="hl-desc">HEC &amp; UNFPA — free, confidential psychosocial support for students. Mental health, bullying, educational issues. Available nationwide.</div>
+    </div>
+    <div class="helpline-card fi">
+      <div class="hl-ico">💻</div>
+      <div class="hl-name">DRF Cyber Harassment Helpline</div>
+      <div class="hl-num">0800-39393</div>
+      <div class="hl-desc">Digital Rights Foundation — Pakistan's first toll-free helpline for online harassment &amp; cyberbullying. Legal advice + psychological support. Mon–Fri 9am–5pm.</div>
+    </div>
+    <div class="helpline-card fi">
+      <div class="hl-ico">🧠</div>
+      <div class="hl-name">Umang Mental Health Helpline</div>
+      <div class="hl-num">0317-4288665</div>
+      <div class="hl-desc">Free mental health support in Urdu &amp; English. Counselling, referrals, and crisis support for students and families.</div>
+    </div>
+    <div class="helpline-card fi">
+      <div class="hl-ico">👮</div>
+      <div class="hl-name">FIA Cyber Crime Wing</div>
+      <div class="hl-num">9911</div>
+      <div class="hl-desc">Report cyberbullying, harassment, or online threats. Available 24/7 for reporting cyber crimes against students.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section class="articles-section" id="resources">
+  <p class="stag fi">Stay Informed</p>
+  <h2 class="stitle fi">Research &amp; Articles</h2>
+  <div class="sline fi"></div>
+  <div class="articles-grid">
+    <a class="article-card fi" href="https://www.pakistantoday.com.pk/2024/01/30/bullying-exploring-the-impact-on-students/" target="_blank">
+      <span class="art-arrow">↗</span>
+      <div class="art-tag">Pakistan Today • 2024</div>
+      <div class="art-title">Bullying: Exploring the Impact on Students in Pakistan</div>
+      <div class="art-src">Pakistan Today</div>
+    </a>
+    <a class="article-card fi" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10138218/" target="_blank">
+      <span class="art-arrow">↗</span>
+      <div class="art-tag">Research • PMC • 2023</div>
+      <div class="art-title">Bullying Prevalence in Pakistan's Educational Institutes — Teacher Perspectives</div>
+      <div class="art-src">PLOS One / PubMed Central</div>
+    </a>
+    <a class="article-card fi" href="https://academiamag.com/bullying-in-pakistan/" target="_blank">
+      <span class="art-arrow">↗</span>
+      <div class="art-tag">Guide • Academia Mag</div>
+      <div class="art-title">Bullying in Pakistan: A Guide for Students to Avoid Being a Victim</div>
+      <div class="art-src">Academia Magazine</div>
+    </a>
+    <a class="article-card fi" href="https://policy-wire.com/cyberbullying-in-pakistan-impact-statistics-legal-challenges/" target="_blank">
+      <span class="art-arrow">↗</span>
+      <div class="art-tag">Cyberbullying • Policy Wire</div>
+      <div class="art-title">Cyberbullying in Pakistan: Impact, Statistics &amp; Legal Challenges</div>
+      <div class="art-src">Policy Wire • 2024</div>
+    </a>
+    <a class="article-card fi" href="https://www.unicef.org/pakistan/press-releases/safer-internet-day-unicef-calls-concerted-action-prevent-bullying-and-harassment" target="_blank">
+      <span class="art-arrow">↗</span>
+      <div class="art-tag">UNICEF Pakistan</div>
+      <div class="art-title">UNICEF Calls for Action to Prevent Online Bullying of Young People in Pakistan</div>
+      <div class="art-src">UNICEF Pakistan</div>
+    </a>
+    <a class="article-card fi" href="https://pakistan.unfpa.org/en/news/national-youth-helpline-help-phone-call-away" target="_blank">
+      <span class="art-arrow">↗</span>
+      <div class="art-tag">UNFPA • 2024</div>
+      <div class="art-title">National Youth Helpline: Help Is But a Phone Call Away</div>
+      <div class="art-src">UNFPA Pakistan</div>
+    </a>
+  </div>
+</section>
+
+<!-- INSTITUTIONS -->
+<section class="inst-section" id="institutions">
+  <p class="stag fi">Seek Professional Help</p>
+  <h2 class="stitle fi">Counselling Services in Pakistan</h2>
+  <div class="sline fi"></div>
+  <div class="inst-grid">
+    <div class="inst-card fi">
+      <div class="inst-name">🎓 UMT Happiness Centre</div>
+      <div class="inst-loc">School of Professional Psychology, Lahore</div>
+      <div class="inst-desc">Clinical counselling services for individuals of all ages. Addresses bullying, anxiety, depression, and psycho-social issues. Run by trained clinical psychologists.</div>
+      <div class="inst-contact"><strong>📍</strong> C-II Johar Town, Lahore<br/><strong>📞</strong> +92 42 35212801-10<br/><strong>🌐</strong> spp.umt.edu.pk/happinesscenter</div>
+    </div>
+    <div class="inst-card fi">
+      <div class="inst-name">🌿 Umang</div>
+      <div class="inst-loc">NGO — Lahore, Islamabad, Karachi</div>
+      <div class="inst-desc">Free mental health helpline and counselling services. Specialises in youth mental health, trauma, and crisis support in Urdu and English.</div>
+      <div class="inst-contact"><strong>📞</strong> 0317-4288665<br/><strong>🕘</strong> Mon–Fri, 9am–5pm</div>
+    </div>
+    <div class="inst-card fi">
+      <div class="inst-name">💻 Digital Rights Foundation</div>
+      <div class="inst-loc">Islamabad — Nationwide</div>
+      <div class="inst-desc">Cyber harassment helpline for victims of online bullying. Provides legal advice, digital security support, and psychological counselling referrals.</div>
+      <div class="inst-contact"><strong>📞</strong> 0800-39393 (toll-free)<br/><strong>✉️</strong> helpdesk@digitalrightsfoundation.pk</div>
+    </div>
+    <div class="inst-card fi">
+      <div class="inst-name">🏥 Rozan Counselling Centre</div>
+      <div class="inst-loc">Islamabad</div>
+      <div class="inst-desc">Community-based mental health and counselling services. Works with children, adolescents, and families. Gender-sensitive and culturally adapted approach.</div>
+      <div class="inst-contact"><strong>🌐</strong> rozan.org<br/><strong>📍</strong> Islamabad</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Stand Up. <span>Speak Up.</span></div>
+  <div class="footer-names" style="margin-top:16px;font-weight:600;color:var(--white);">Ambreen Sarfraz &nbsp;|&nbsp; Fatima Amir</div>
+  <div class="footer-inst">
+    Resource Person: [Miss Zahra Bakhat Awaisi]<br/>
+    School of Professional Psychology (SPP), University of Management and Technology (UMT)<br/>
+    C-II Johar Town, Lahore &nbsp;•&nbsp; <a href="mailto:spp@umt.edu.pk" style="color:var(--teal2);text-decoration:none;">spp@umt.edu.pk</a><br/><br/>
+    <span style="opacity:.45;font-size:11px;">Child Counselling Presentation • Understanding Bullying &amp; Its Psychological Impact on Students • 2026</span>
+  </div>
+</footer>
+
+<script>
+// Fade in on scroll
+const obs = new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on');}),{threshold:.1});
+document.querySelectorAll('.fi').forEach(el=>obs.observe(el));
+
+// Highlight selected poll option
+document.querySelectorAll('.poll-opt input').forEach(inp=>{
+  inp.addEventListener('change',function(){
+    const name=this.name;
+    if(this.type==='radio'){
+      document.querySelectorAll(`input[name="${name}"]`).forEach(i=>i.closest('.poll-opt').classList.remove('selected'));
+    }
+    this.closest('.poll-opt').classList.toggle('selected',this.checked);
+  });
+});
+
+// Poll submit
+const p1Totals={Physical:142,Verbal:231,Social:189,Cyber:164,Identity:98,No:67};
+const p2Totals={'Yes-witnessed':203,'Yes-known':178,Both:156,No:89,Unsure:44};
+
+function submitPoll(n){
+  if(n===1){
+    const checked=[...document.querySelectorAll('input[name="p1"]:checked')].map(i=>i.value);
+    if(!checked.length){alert('Please select at least one option.');return;}
+    checked.forEach(v=>{if(p1Totals[v])p1Totals[v]++;});
+    const res=document.getElementById('p1-result');
+    const total=Object.values(p1Totals).reduce((a,b)=>a+b,0);
+    const labels={Physical:'👊 Physical',Verbal:'🗣️ Verbal',Social:'🙈 Social',Cyber:'📱 Cyber',Identity:'🏷️ Identity',No:'✅ Not bullied'};
+    res.innerHTML=`<p>Thank you! Here's what others said:</p><div class="bar-wrap">`+
+      Object.entries(p1Totals).map(([k,v])=>`<div class="bar-item"><span class="bar-label">${labels[k]}</span><div class="bar-track"><div class="bar-fill" style="width:0" data-w="${Math.round(v/total*100)}%"></div></div><span style="font-size:11px;color:var(--teal2);min-width:32px">${Math.round(v/total*100)}%</span></div>`).join('')+`</div>`;
+    res.style.display='block';
+    document.querySelector('[onclick="submitPoll(1)"]').style.display='none';
+    setTimeout(()=>res.querySelectorAll('.bar-fill').forEach(b=>b.style.width=b.dataset.w),100);
+  } else {
+    const sel=document.querySelector('input[name="p2"]:checked');
+    if(!sel){alert('Please select one option.');return;}
+    p2Totals[sel.value]++;
+    const total=Object.values(p2Totals).reduce((a,b)=>a+b,0);
+    const labels={'Yes-witnessed':'👀 Witnessed it','Yes-known':'💙 Know a victim',Both:'Both',No:'No',Unsure:'Not sure'};
+    const res=document.getElementById('p2-result');
+    res.innerHTML=`<p>Thank you! Here's what others said:</p><div class="bar-wrap">`+
+      Object.entries(p2Totals).map(([k,v])=>`<div class="bar-item"><span class="bar-label">${labels[k]}</span><div class="bar-track"><div class="bar-fill" style="width:0" data-w="${Math.round(v/total*100)}%"></div></div><span style="font-size:11px;color:var(--teal2);min-width:32px">${Math.round(v/total*100)}%</span></div>`).join('')+`</div>`;
+    res.style.display='block';
+    document.querySelector('[onclick="submitPoll(2)"]').style.display='none';
+    setTimeout(()=>res.querySelectorAll('.bar-fill').forEach(b=>b.style.width=b.dataset.w),100);
+  }
+}
+</script>
+</body>
+</html>
